@@ -59,11 +59,11 @@ self.addEventListener('activate', function (event) {
 
 function isInArray(string, array) {
   var cachePath;
-  if (string.indexOf(self.origin) === 0) { // request targets domain where we serve the page from (i.e. NOT a CDN)
+  if (string.indexOf(self.origin) === 0) { 
     console.log('matched ', string);
-    cachePath = string.substring(self.origin.length); // take the part of the URL AFTER the domain (e.g. after localhost:8080)
+    cachePath = string.substring(self.origin.length); 
   } else {
-    cachePath = string; // store the full request (for CDNs)
+    cachePath = string; 
   }
   return array.indexOf(cachePath) > -1;
 }
@@ -102,7 +102,6 @@ self.addEventListener('fetch', function (event) {
               .then(function (res) {
                 return caches.open(CACHE_DYNAMIC_NAME)
                   .then(function (cache) {
-                    // trimCache(CACHE_DYNAMIC_NAME, 3);
                     cache.put(event.request.url, res.clone());
                     return res;
                   })
